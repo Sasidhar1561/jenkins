@@ -16,14 +16,14 @@ pipeline{
         appRegistry = "761018872145.dkr.ecr.us-east-1.amazonaws.com/vprofile-img"
         vprofileRegistry = "https://761018872145.dkr.ecr.us-east-1.amazonaws.com"
         cluster = "vprofile"
-        service = "vprofileappsvc	"
+        service = "vprofileappsvc"
     }
 
 	stages{
 
 		stage("fetch code"){
 			steps{
-				git branch: 'docker', url: 'https://github.com/hkhcoder/vprofile-project.git'			
+				git branch: 'main', url: 'https://github.com/Sasidhar1561/jenkins.git'			
 				}
 		}
 
@@ -100,7 +100,7 @@ pipeline{
           steps {
        
             script {
-                dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "./Docker-files/app/multistage/")
+                dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER", "./dockerfile")
                 }
           }
     
@@ -125,7 +125,7 @@ pipeline{
 
         stage('Deploy to ecs') {
           steps {
-            withAWS(credentials: 'awscreds', region: 'us-east-2') {
+            withAWS(credentials: 'awscreds', region: 'us-east-1') {
             sh 'aws ecs update-service --cluster ${cluster} --service ${service} --force-new-deployment'
                }
           }
