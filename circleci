@@ -1,0 +1,18 @@
+Mobile CI/CD – Ultra Short Notes
+	•	Jenkins starts pipeline and orchestrates
+	•	Builds tooling Docker image
+	•	Installs Node, Ruby, Bundler, Fastlane
+	•	❌ Does NOT run Fastlane lanes
+	•	Jenkins triggers CircleCI
+	•	CircleCI is the executor
+	•	Runs on CircleCI-managed infrastructure (not EKS/AWS)
+	•	Uses macOS executor
+	•	Fastlane runs ONLY in CircleCI
+	•	bundle install
+	•	bundle exec fastlane <lane>
+	•	Submits app to App Store / Play Store
+	•	Why macOS
+	•	Required for iOS
+	•	Android also runs on macOS
+
+Jenkins orchestrates, CircleCI executes Fastlane on macOS, and Fastlane handles mobile app submission.
